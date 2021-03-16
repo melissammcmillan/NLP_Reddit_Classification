@@ -1,36 +1,55 @@
-# Project 3 - NLP Modelling of Two Reddit Pages by Melissa McMillan
+## NLP Modelling of Two Reddit Pages
 
-Welcome to My Project 3: Discerning between the r/GameofThrones and r/LordoftheRings pages
+### Table of Contents
+Below is a table of contents, which contains the file name, file order, and file description. The file order column represents which order the files should be opened and read. Folder Order 0 and File Order 1 should be started with.
 
-**Executive Summary:**
+**Folder Name**|**Folder Order**|**File Name**|**File Order**|**File Description**
+:-----:|:-----:|:-----:|:-----:|:-----:
+Main|0|README.md|1|The README file contains the executive summary and overview of the project as a whole.
+Main|0|NLP_Project_Presentation.ppt|2|This is the ppt version of the project presentation.
+Main|0|NLP_Project_Presentation.pdf|3|This is the pdf version of the project presentation.
+data|1|got_5100_posts.csv|1|These are the raw Game of Thrones subreddit posts.
+data|1|lotr_5100_posts.csv|2|These are the raw Lord of the Rings subreddit posts.
+data|1|combined_data_with_selftext.csv|3|This is the combined, cleaned dataset from both subreddits.
+data|1|combined_data_cleaned_with_regexp.csv|4|This is the final, cleaned dataset used for modelling.
+code|2|01_Webscraping.ipynb|1|In this notebook I gather the raw data from Reddit.
+code|2|02_EDA_and_Cleaning.ipynb|2|In this notebook I clean and perform Exploratory Data Analysis on the data.
+code|2|03_Naive_Bayes_Modelling_Part1.ipynb|3|This notebook contains the initial Naive Bayes models for the project.
+code|2|04_Naive_Bayes_Modelling_Part2.ipynb|4|This notebook contains the final Naive Bayes models for the project.
+code|2|05_Random_Forest_Modelling.ipynb|5|This notebook contains the Random Forest models for the project.
+images|3|Top_Words_in_RFC_Model.png|1|This image contains the top words used in the production Random Forest Model.
 
-For Project 3, our mission was to utilize two somewhat similar/overlapping subreddits from the Reddit website and run a few Natural Language Processing (NLP) models to try to delineate which posts came from which subreddit page. For further narrative and context, I have a "friend" who is the main subreddit moderator for the r/GameofThrones webpage, and she has a consistent problem in that she often spends time manually removing posts related to the Lord of the Rings on her subreddit page. So, I thought I would try to help her by creating a model that can delineate between Game of the Thrones-related posts and those that should belong on the r/LordoftheRings (r/LOTR) subreddit page instead. Then, my friend could use the model to help filter out the Lord of the Rings posts from the r/GameofThrones webpage. 
+**The Problem**
 
-To gather data, I use Pushshift's Reddit API to scrape 5,100 post titles and descriptions from each page and put them into a dataframe. I did some cleaning and EDA on each and ultimately decided not to use the post descriptions in my model because there were so many null values between the two datasets. Once I combined my datasets into one large dataframe, I did further EDA and cleaning and explored using a RegEx Tokenizer to filter out some of the text data. Notebook 01 contains the data collection phase of my project and Notebook 02 contains the EDA and Cleaning phase of my project.
+Reddit.com is a social media website where one can find a community on almost any topic. Each topic is referred to as a "subreddit" and denoted by "r/topic_name" and these subreddits have moderators that provide guidance and rules for content that belongs on the page and content that does not. I have a friend who is the main subreddit moderator for the r/GameofThrones webpage, and she often runs into the problem where she has to spend time manually removing posts related to the Lord of the Rings on her subreddit page. She spends hours every week on this problem, so I thought I might try to help her out.
 
-After the EDA and cleaning phase, I then began to build some models. I tested both the Multinomial Naive Bayes Classifier and the Random Forest Classifier models to explore which would work best with this dataset. I ran about 20 models between the two types of models, and those can be found in Notebooks 03, 04, and 05. I found that both types of models performed similarly overall, but the best model was a Random Forest Classifier because it had the lowest Recall/Sensitivity score and lowest False Negative score. Those were two key metrics I decided to use for helping my friend because I thought it would be better for her to allow in a small amount of Lord of the Rings posts rather than discard legitimate Game of Thrones posts. 
+**The Solution**
 
-After running many models and tuning parameters, I found that I was able to create a good model that can help my friend with ~93% accuracy and ~9-10% of the predictions coming up as false negatives. This model was a Random Forest Classifier that utilized a Tfidf Vectorizer and WordNetLemmatizer. This best model can be found in Notebook 05.  
+To help this friend out, I thought I would try to help by creating a classification model that can delineate between Game of the Thrones-related posts and those that should belong on the r/LordoftheRings (r/LOTR) subreddit page instead. My friend could then use the model to help filter out the Lord of the Rings posts from the r/GameofThrones webpage. In summary, I utilized Naive Bayes and Random Forest Classifier models to develop the best classification model that optimizes for accuracy score, Sensitivity/Recall score, and reduces the false negative predictions as much as possible.
 
-**Problem Statement**
+**Evaluation Metrics**
+In order to evaluate for the best classification model, I decided to optimize for both Accuracy Score and Recall/Sensitivity. The dataset was split fairly evenly between the two subreddit pages, so the null model to compare to was ~50%. Accuracy score helped me evaluate how the models did on the training set vs the test set (as well as keep an eye on overfitting), and the Recall/Sensitivity score allowed me to optimize for retainment of the Game of Thrones posts. I figured it would be better for her to allow in a small amount of Lord of the Rings posts rather than discard legitimate Game of Thrones posts.
 
-I have a friend who is the main subreddit moderator for the r/GameofThrones webpage, and she has a consistent problem in that she often spends time manually removing posts related to the Lord of the Rings films on her subreddit page. So, I thought I would try to help her by creating a model that can delineate between Game of the Thrones-related posts and those that should belong to the r/LordoftheRings (r/LOTR) subreddit page instead. Then, my friend could use the model to help filter out the Lord of the Rings posts from the r/GameofThrones webpage. The goal of my project is to develop the best classification model that optimizes for accuracy score, Sensitivity/Recall score, and reduces the false negative predictions as much as possible.
+**Data Acquisition and Preprocessing**
 
----
-## Deliverables 
+To gather data, I use Pushshift's Reddit API to scrape 5,100 post titles and descriptions from each page and put them into a dataframe. I did some cleaning and EDA on each and ultimately decided not to use the post descriptions in my model because there were so many null values between the two datasets. Once I combined my datasets into one large dataframe, I explored using a RegEx Tokenizer to filter out the emojis, special characters, and symbols. Notebook 01 contains the data collection phase of my project and Notebook 02 contains the EDA and Cleaning phases of my project.
 
-- README file (you are reading it now!): quick summary of project
-- Code Folder: These contain my Jupyter Notebooks
-    1. 01_Webscraping: This is the starting point for my project. It's where I initially read the data in and condense it into one dataframe and export for Cleaning/EDA.
-    2. 02_EDA_and_Cleaning: This is where I initially read the data in and run through the  cleaning and exploration process. 
-    3. 03_Naive_Bayes_Modelling_Part1: This has my first ~15 Naive Bayes models to get familiar with testing different parameters and seeing what works best. 
-    4. 04_Naive_Bayes_Modelling_Part2: These models use the most clean dataset I made and run final parameters to try to acheive the best NB model I can.
-    5. 05_Random_Forest_Modelling: Contains ~5 Random Forest models and has my best overall model for the project.
-- Project3_Presentation.zip file: I had to zip my presentation to get it on GitHub. Please open it up to access my presentation files.
-- Project3_Presentation in ppt format: this is what I showed to the class
-- Project3_Presentation in pdf format: this is the pdf exported version of what I presented to the class
-- Data Files: There are 4 files in this folder, here are the details
-    1. combined_data_cleaned_with_regexp.csv: this is the final cleaned dataset with emojies, symbols, and special characters removed
-    2. combined_data_with_selftext.csv: this is my first-pass cleaned dataset, but still has emojies and symbols in it
-    3. got_5100_posts.csv: This is the raw scraped data from the Game of Thrones subreddit page.
-    4. lotr_5100_posts.csv: This is the scraped data from the Lord of the Rings subreddit page.
+**Final Production Model**
+
+After the EDA and cleaning phase, I then began to build some models. I tested both the Multinomial Naive Bayes Classifier and the Random Forest Classifier models to explore which would work best with this dataset. I ran about 20 models between the two types of models, and those can be found in Notebooks 03, 04, and 05. I found that both types of models performed similarly overall, but the best model was a Random Forest Classifier because it had the lowest Recall/Sensitivity score and lowest False Negative score. The Random Forest Model also was able to maintain the least amount of overfitting. This best model utilized a TFIDF Vectorizer and WordNet Lemmatizer to further prep the data. The test score accuracy was 93% and Recall/Sensitivity score was 91%.
+
+In examining the most important words in the Random Forest Model, I discovered that some words made sense, but others did not. Upon further investigation, it was discovered that many of the posts in my r/GameofThrones dataset were actually spam for other common shows (outside of Lord of the Rings). This explains why words such as "14", "bigg", and "bos" were among the top words. There were many spam posts about MTV India's "Bigg Boss" show in the dataset. I have added this to the further work section of this project to go back and make a custom stop words list to remove those types of things. While I'm at it, I'd like to remove the word "spoiler" from the dataset as well. I think these improvements may enhance the performance of my model overall.
+
+<img src="images/Top_Words_in_RFC_Model.png" width ="400" height="400">
+
+**The Conclusion**
+
+After running many models and tuning parameters, I found that I was able to create a successful model that can help my friend with ~93% accuracy and ~9-10% of the predictions coming up as false negatives. This model was a Random Forest Classifier that utilized a Tfidf Vectorizer and WordNetLemmatizer. This best model can be found in Notebook 05.
+
+**Recommendations**
+
+As with many Data Science endeavors, the creation of a successful model depended heavily on the data cleaning phase of this project. While my model was able to discern between the two subreddit posts with ~93% accuracy, I found that the best model utilized the TFIDF Vectorizer (as opposed to the CountVectorizer) and WordNet Lemmatizer together, along with removing stopwords and utilizing the max_features hyperparameter. The RandomForest Classifier performed better than Naive Bayes in this work, outperforming not so much in accuracy score but in the Recall/Sensitivity metric and in reducing overfitting.
+
+**Improvements**
+
+While I was able to create a successful production model that can discern between the two subreddits, there is plenty of follow-up work to progress and further refine the model's performance. As mentioned, I'd like to go back and add more words to the stopwords list to remove the spam posts. I'd also like to experiment with different types of classification models to see if I can improve performance. It may also be interesting to utilize a Sentiment Analysis type of tool, as the Game of Thrones seasons were often controversial, and I wonder if the sentiment of the posts might be useful for the models.
