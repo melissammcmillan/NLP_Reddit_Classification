@@ -40,7 +40,7 @@ After the EDA and cleaning phase, I then began to build some models. I tested bo
 
 In examining the most important words in the Random Forest Model, I discovered that some words made sense, but others did not. Upon further investigation, it was discovered that many of the posts in my r/GameofThrones dataset were actually spam for other common shows (outside of Lord of the Rings). This explains why words such as "14", "bigg", and "bos" were among the top words. There were many spam posts about MTV India's "Bigg Boss" show in the dataset. I have added this to the further work section of this project to go back and make a custom stop words list to remove those types of things. While I'm at it, I'd like to remove the word "spoiler" from the dataset as well. I think these improvements may enhance the performance of my model overall.
 
-<img src="images/Top_Words_in_RFC_Model.png" width ="700" height="500">
+<img src="images/Top_Words_in_RFC_Model.png" width ="600" height="450">
 
 **The Conclusion**
 
